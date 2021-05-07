@@ -2,11 +2,15 @@ package com.golaxy.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.sql.Timestamp;
+
+import lombok.Builder;
+import lombok.AllArgsConstructor;
 
 @Entity
+@AllArgsConstructor
+@Builder
+@Table(name = "teacher")
 public class Teacher implements Serializable {
     private Long userid;
     private String username;
@@ -17,36 +21,25 @@ public class Teacher implements Serializable {
     private boolean gender;
     private int age;
     private String userlevel;
-    private Date applyTime;
-    private Date enterTime;
-    private Date quitTime;
+    private Timestamp applyTime;
+    private Timestamp enterTime;
+    private Timestamp quitTime;
     private String realname;
+    private boolean isMaster;
+
+    public boolean isMaster() {
+        return isMaster;
+    }
+
+    public void setMaster(boolean master) {
+        isMaster = master;
+    }
 
     public String getRealname() {
         return realname;
     }
 
     public void setRealname(String realname) {
-        this.realname = realname;
-    }
-
-    Teacher(Long id, String username, String nickname, String contactInfo, String remark,
-            int userstatus, boolean gender, int age,
-            String userlevel, int state,
-            Date applyTime, Date enterTime, Date quitTime,
-            String realname) {
-        this.userid = id;
-        this.username = username;
-        this.nickname = nickname;
-        this.contactInfo = contactInfo;
-        this.remark = remark;
-        this.userstatus = userstatus;
-        this.gender = gender;
-        this.age = age;
-        this.userlevel = userlevel;
-        this.applyTime = applyTime;
-        this.enterTime = enterTime;
-        this.quitTime = quitTime;
         this.realname = realname;
     }
 
@@ -118,27 +111,27 @@ public class Teacher implements Serializable {
         this.userlevel = userlevel;
     }
 
-    public Date getApplyTime() {
+    public Timestamp getApplyTime() {
         return applyTime;
     }
 
-    public void setApplyTime(Date applyTime) {
+    public void setApplyTime(Timestamp applyTime) {
         this.applyTime = applyTime;
     }
 
-    public Date getEnterTime() {
+    public Timestamp getEnterTime() {
         return enterTime;
     }
 
-    public void setEnterTime(Date enterTime) {
+    public void setEnterTime(Timestamp enterTime) {
         this.enterTime = enterTime;
     }
 
-    public Date getQuitTime() {
+    public Timestamp getQuitTime() {
         return quitTime;
     }
 
-    public void setQuitTime(Date quitTime) {
+    public void setQuitTime(Timestamp quitTime) {
         this.quitTime = quitTime;
     }
 
@@ -150,18 +143,4 @@ public class Teacher implements Serializable {
     public Long getUserid() {
         return userid;
     }
-
-    @ManyToMany(targetEntity = Myclass.class, cascade = CascadeType.ALL)
-    @JoinTable(name = "teacher_class_rel",
-            joinColumns = {@JoinColumn(name = "teacher_id", referencedColumnName = "userid")},
-            inverseJoinColumns = {@JoinColumn(name = "class_id", referencedColumnName = "id")}
-    )
-    private Set<Myclass> classes = new HashSet<Myclass>();
-
-    @ManyToMany(targetEntity = School.class, cascade = CascadeType.ALL)
-    @JoinTable(name = "teacher_school_rel",
-            joinColumns = {@JoinColumn(name = "teacher_id", referencedColumnName = "userid")},
-            inverseJoinColumns = {@JoinColumn(name = "school_id", referencedColumnName = "id")}
-    )
-    private Set<School> schools = new HashSet<School>();
 }

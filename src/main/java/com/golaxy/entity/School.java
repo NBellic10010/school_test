@@ -3,22 +3,40 @@ package com.golaxy.entity;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import lombok.Builder;
+import lombok.AllArgsConstructor;
+
 @Entity
+@AllArgsConstructor
+@Table(name = "school")
+@Builder
 public class School implements Serializable {
     private Long id;
     private String name;
     private String address;
     private String intro;
+    private int teacherMaxnum;
+    private int studentMaxnum;
 
-    public School(Long id, String name, String address, String intro) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.intro = intro;
+    public int getTeacherMaxnum() {
+        return teacherMaxnum;
+    }
+
+    public void setTeacherMaxnum(int teacherMaxnum) {
+        this.teacherMaxnum = teacherMaxnum;
+    }
+
+    public int getStudentMaxnum() {
+        return studentMaxnum;
+    }
+
+    public void setStudentMaxnum(int studentMaxnum) {
+        this.studentMaxnum = studentMaxnum;
     }
 
     public School() {
@@ -56,7 +74,4 @@ public class School implements Serializable {
     public Long getId() {
         return id;
     }
-
-    @ManyToMany(mappedBy = "school")
-    private Set<Teacher> teachers = new HashSet<>();
 }

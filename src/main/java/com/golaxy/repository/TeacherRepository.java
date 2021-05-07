@@ -19,10 +19,6 @@ public interface TeacherRepository extends JpaRepository<Teacher, Long> {
     @Query(value = "update teacher set status=?2 where userid=?1", nativeQuery = true)
     void setTeacherStatus(Long userid, int status);
 
-    @Modifying
-    @Query(value = "update teacher set state=?2 where userid=?1", nativeQuery = true)
-    void setTeacherState(Long userid, int state);
-
     @Query(value = "select * from teacher t left join teacher_class_rel r where t.userid=r.teacher_id", nativeQuery = true)
     List<Object> getTeachersByClassId(Long classId);
 

@@ -28,33 +28,26 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
             on
                 s.userid = sids.s_id
             """, nativeQuery = true)
-    List<Object> getStudentsBySchoolId(Long schoolId);
+    List<Student> getStudentsBySchoolId(Long schoolId);
 
     Object getStudentByUserid(Long UserId);
 
-    @Query(value = "select * from student_class_rel where class_id=?1", nativeQuery = true)
-    List<Object> getStudentByClassId(int classId);
-
     @Query(value = "select apply_time, enter_time, quit_time from student where userid=?1", nativeQuery = true)
-    Object getDatesByStudentId(Long studentId);
+    List<String> getDatesByStudentId(Long studentId);
 
     @Modifying
-    @Query(value = "update student set state=?2 where userid=?1", nativeQuery = true)
-    void setStateByStudentId(Long studentId, int state);
+    @Query(value = "update student_class_rel set class_id=?3 where student_id=?2 and class_id=?1", nativeQuery = true)
+    void setClassByStudentId(Long classid, Long studentId, Long newClassId);
 
     @Modifying
-    @Query(value = "update student_class_rel set class_id=?1 where student_id=?2", nativeQuery = true)
-    void setClassByStudentId(Long classid, Long studentId);
-
-    @Modifying
-    @Query(value = "update students set status=?1 where userid=?2", nativeQuery = true)
+    @Query(value = "update students set status=?2 where userid=?1", nativeQuery = true)
     void setStatusByStudentId(Long studentId, int status);
 
     @Query(value = "select * from student s left join student_class_rel r on r.student_id=s.userid where r.class_id=?1", nativeQuery = true)
-    List<Object> getStudentsByClassId(int classId);
+    List<Object> getStudentsByClassId(Long classId);
 
     @Query(value = "select * from student s left join student_teacher_rel r on r.student_id=s.userid where r.teacher_id=?1", nativeQuery = true)
-    List<Object> getStudentsByTeacherId(int teacherId);
+    List<Object> getStudentsByTeacherId(Long teacherId);
 
     @Query(value = """
             select
@@ -83,5 +76,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
             on
                 student.userid = c_s_r.student_id
             """, nativeQuery = true)
-    List<Object> getStudentsByTeacherIdAndSchoolId(int schoolId, int teacherID);
+    List<Object> getStudentsByTeacherIdAndSchoolId(Long schoolId, Long teacherId);
+
+    Object getStudentByUsername(String username);
 }

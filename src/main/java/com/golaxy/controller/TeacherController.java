@@ -3,7 +3,6 @@ package com.golaxy.controller;
 import com.golaxy.entity.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.golaxy.repository.TeacherRepository;
 import com.golaxy.service.TeacherService;
 
 import java.util.List;
@@ -46,7 +45,7 @@ public class TeacherController {
     }
 
     @ResponseBody
-    @GetMapping("/school/teachers/{class_id}")
+    @GetMapping("/school/teachers/class/{class_id}")
     public List<Object> getTeachersByClassId(@PathVariable("class_id") int classId) {
         return teacherService.getTeachersByClassId(classId);
     }
@@ -59,7 +58,7 @@ public class TeacherController {
     }
 
     @ResponseBody
-    @GetMapping("/school/teachers/{username}")
+    @GetMapping("/school/teachers/username/{username}")
     public Object getTeacherByUsername(@PathVariable("username") String username) {
         return teacherService.getTeacherByUsername(username);
     }

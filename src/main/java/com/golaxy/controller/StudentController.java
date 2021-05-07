@@ -14,6 +14,12 @@ public class StudentController {
     private StudentService studentService;
 
     @ResponseBody
+    @GetMapping("/school/students/username/{username}")
+    public Object getStudentByUsername(@PathVariable("username") String username) throws Exception {
+        return studentService.getStudentByUsername(username);
+    }
+
+    @ResponseBody
     @GetMapping("/school/students/{school_id}")
     public List<Object> getAllStudentsBySchoolId(@PathVariable("school_id") int schoolId) throws Exception {
         return studentService.getAllStudentsBySchoolId(schoolId);
@@ -61,8 +67,9 @@ public class StudentController {
     @ResponseBody
     @PutMapping("/school/students/class")
     public Object setClassByStudentId(@RequestParam("student_id") int studentId,
-                                      @RequestParam("class_id") int classId) throws Exception {
-        return studentService.setClassByStudentId(studentId, classId);
+                                      @RequestParam("class_id") int classId,
+                                      @RequestParam("new_class_id") int newClassId) throws Exception {
+        return studentService.setClassByStudentId(studentId, classId, newClassId);
     }
 
     @ResponseBody

@@ -2,15 +2,17 @@ package com.golaxy.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
+
+import lombok.Builder;
+import lombok.AllArgsConstructor;
 
 @Entity
+@AllArgsConstructor
 @Table(name = "class")
+@Builder
 public class Myclass implements Serializable {
     private Long id;
     private String name;
@@ -27,17 +29,6 @@ public class Myclass implements Serializable {
 
     public void setSchoolId(int schoolId) {
         this.schoolId = schoolId;
-    }
-
-    public Myclass(Long id, String name, int type, Timestamp startTime,
-                   Timestamp endTime, String remark, int status) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.remark = remark;
-        this.status = status;
     }
 
     public Myclass() {
@@ -99,10 +90,4 @@ public class Myclass implements Serializable {
     public Long getId() {
         return id;
     }
-
-    @ManyToMany(mappedBy = "class")
-    private Set<Teacher> teachers = new HashSet<>();
-
-    @ManyToMany(mappedBy = "class")
-    private Set<Student> students = new HashSet<>();
 }

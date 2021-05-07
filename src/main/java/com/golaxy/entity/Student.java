@@ -2,23 +2,27 @@ package com.golaxy.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.sql.Timestamp;
+
+import lombok.Builder;
+import lombok.AllArgsConstructor;
 
 @Entity
+@Builder
+@AllArgsConstructor
+@Table(name = "student")
 public class Student implements Serializable {
     private Long userid;
     private String username;
     private boolean gender;
     private int age;
-    private int userlevel;
+    private String userlevel;
     private String contactInfo;
     private int userstatus;
     private String remarks;
-    private Date applyTime;
-    private Date enterTime;
-    private Date quitTime;
+    private Timestamp applyTime;
+    private Timestamp enterTime;
+    private Timestamp quitTime;
     private String nickname;
     private String realname;
 
@@ -27,27 +31,6 @@ public class Student implements Serializable {
     }
 
     public void setRealname(String realname) {
-        this.realname = realname;
-    }
-
-    public Student(Long userid, String username,
-                   boolean gender, int age, int userlevel,
-                   String contactInfo, int userstatus,
-                   String remarks, Date applyTime,
-                   Date enterTime, Date quitTime, int state, String nickname,
-                   String realname) {
-        this.userid = userid;
-        this.username = username;
-        this.gender = gender;
-        this.age = age;
-        this.userlevel = userlevel;
-        this.contactInfo = contactInfo;
-        this.userstatus = userstatus;
-        this.remarks = remarks;
-        this.applyTime = applyTime;
-        this.enterTime = enterTime;
-        this.quitTime = quitTime;
-        this.nickname = nickname;
         this.realname = realname;
     }
 
@@ -78,11 +61,11 @@ public class Student implements Serializable {
         this.age = age;
     }
 
-    public int getUserlevel() {
+    public String getUserlevel() {
         return userlevel;
     }
 
-    public void setUserlevel(int userlevel) {
+    public void setUserlevel(String userlevel) {
         this.userlevel = userlevel;
     }
 
@@ -110,27 +93,27 @@ public class Student implements Serializable {
         this.remarks = remarks;
     }
 
-    public Date getApplyTime() {
+    public Timestamp getApplyTime() {
         return applyTime;
     }
 
-    public void setApplyTime(Date applyTime) {
+    public void setApplyTime(Timestamp applyTime) {
         this.applyTime = applyTime;
     }
 
-    public Date getEnterTime() {
+    public Timestamp getEnterTime() {
         return enterTime;
     }
 
-    public void setEnterTime(Date enterTime) {
+    public void setEnterTime(Timestamp enterTime) {
         this.enterTime = enterTime;
     }
 
-    public Date getQuitTime() {
+    public Timestamp getQuitTime() {
         return quitTime;
     }
 
-    public void setQuitTime(Date quitTime) {
+    public void setQuitTime(Timestamp quitTime) {
         this.quitTime = quitTime;
     }
 
@@ -150,18 +133,4 @@ public class Student implements Serializable {
     public Long getUserid() {
         return userid;
     }
-
-    @ManyToMany(targetEntity = Myclass.class, cascade = CascadeType.ALL)
-    @JoinTable(name = "student_class_rel",
-            joinColumns = {@JoinColumn(name = "student_id", referencedColumnName = "userid")},
-            inverseJoinColumns = {@JoinColumn(name = "class_id", referencedColumnName = "id")}
-    )
-    private Set<Myclass> classes = new HashSet<>();
-
-    @ManyToMany(targetEntity = Teacher.class, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "teacher_student_rel",
-            joinColumns = {@JoinColumn(name = "student", referencedColumnName = "username")},
-            inverseJoinColumns = {@JoinColumn(name = "teacher", referencedColumnName = "username")}
-    )
-    private Set<Teacher> teachers = new HashSet<>();
 }

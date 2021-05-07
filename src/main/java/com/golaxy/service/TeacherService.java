@@ -1,6 +1,5 @@
 package com.golaxy.service;
 
-import com.golaxy.entity.Student;
 import com.golaxy.entity.Teacher;
 import com.golaxy.repository.ClassRepository;
 import com.google.gson.Gson;
@@ -44,7 +43,7 @@ public class TeacherService {
             Long userid = teacher.getUserid();
             List<Object> classes = classRepository.getClassesBySchoolIdAndTeacherId((long) schoolId, userid);
             teacherJson.addProperty("classes", classes.toString());
-            result.add(teacherJson);
+            result.add(teacherJson.toString());
         }
         return result;
     }

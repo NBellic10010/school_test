@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
 
+import lombok.Builder;
+
 @Entity
 public class Match implements Serializable {
     private Long id;
